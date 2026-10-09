@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Pesquisas eleitorais presidenciais reunidas em uma tabela simples e transparente.">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    (() => {
+      try {
+        const saved = localStorage.getItem("radar-theme");
+        const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = saved || (systemDark ? "dark" : "light");
+      } catch (_) { document.documentElement.dataset.theme = "light"; }
+    })();
+  </script>
+  <title>Radar das Pesquisas — 2º turno presidencial</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="./" aria-label="Radar das Pesquisas, início">
+        <span class="brand-mark">RP</span>
+        <span><strong>Radar das Pesquisas</strong><small>Dados eleitorais, com fontes</small></span>
+      </a>
+      <div class="header-actions"><a class="source-link" href="https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml" target="_blank" rel="noopener">Consultar TSE ↗</a><button id="theme-toggle" class="theme-toggle" type="button" aria-label="Ativar modo escuro" aria-pressed="false"><span id="theme-icon" aria-hidden="true">☾</span><span id="theme-label">Modo escuro</span></button></div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="intro">
+      <p class="eyebrow">ELEIÇÕES PRESIDENCIAIS · 2026</p>
+      <h1>Pesquisas presidenciais<br><span>em um só lugar.</span></h1>
+      <p class="lede">Veja os levantamentos registrados, confira os números publicados e acesse as fontes originais.</p>
+      <div class="notice"><span class="notice-dot" aria-hidden="true"></span><span>Os percentuais só são exibidos após conferência na publicação original. Registro no TSE não significa certificação dos resultados.</span></div>
+    </section>
+
+    <section class="toolbar" aria-label="Filtros das pesquisas">
+      <label>Instituto
+        <select id="institute-filter">
+          <option value="all">Todos os institutos</option>
+        </select>
+      </label>
+      <label>Ordenar por
+        <select id="sort">
+          <option value="newest">Divulgação mais recente</option>
+          <option value="oldest">Divulgação mais antiga</option>
+          <option value="institute">Instituto (A–Z)</option>
+        </select>
+      </label>
+      <label>Exibição
+        <select id="kind">
+          <option value="all">Todas as pesquisas</option>
+          <option value="valid">Somente dados conferidos</option>
+        </select>
+      </label>
+    </section>
+
+    <section class="results-heading">
+      <div><h2>Resultados das pesquisas</h2><p id="result-count">Carregando pesquisas…</p></div>
+      <span class="updated" id="updated">Atualização: —</span>
+    </section>
+
+    <div class="table-shell">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Instituto / registro</th>
+            <th scope="col">Coleta</th>
+            <th scope="col">Candidato A</th>
+            <th scope="col">Candidato B</th>
+            <th scope="col">Amostra / margem</th>
+            <th scope="col">Fonte</th>
+          </tr>
+        </thead>
+        <tbody id="polls-body">
+          <tr><td colspan="6" class="loading">Carregando dados…</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">Os percentuais são apresentados conforme a modalidade indicada na fonte. Não misturamos votos totais com votos válidos.</p>
+
+    <section class="registry-section">
+      <div class="results-heading">
+        <div><h2>Registros no TSE</h2><p id="registry-count">Carregando registros oficiais…</p></div>
+        <a class="source" href="https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml" target="_blank" rel="noopener">Abrir PesqEle ↗</a>
+      </div>
+      <p class="table-note">Esta lista é importada do arquivo de dados abertos do TSE. Registro não significa que o TSE tenha certificado os percentuais. Os resultados numéricos só entram na tabela principal após conferência da publicação ou relatório original.</p>
+      <div class="table-shell">
+        <table class="registry-table">
+          <thead><tr><th scope="col">Instituto / registro</th><th scope="col">Registro</th><th scope="col">Campo</th><th scope="col">Divulgação</th><th scope="col">Amostra</th><th scope="col">Consulta</th></tr></thead>
+          <tbody id="registry-body"><tr><td colspan="6" class="loading">Carregando registros…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="method">
+      <div class="method-icon">i</div>
+      <div><h2>Como ler esta página</h2>
+        <p>O registro no TSE identifica uma pesquisa registrada, mas não significa que o Tribunal tenha certificado previamente os seus resultados. Cada linha deve apontar para a fonte original e indicar a modalidade do percentual.</p>
+        <p>O site é independente e não é afiliado ao TSE, aos institutos de pesquisa ou a candidatos e partidos.</p>
+      </div>
+    </section>
+    <footer><span>Radar das Pesquisas · Projeto independente</span><a href="https://www.tse.jus.br/eleicoes/pesquisas-eleitorais" target="_blank" rel="noopener">Sobre pesquisas eleitorais no TSE ↗</a></footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
